@@ -4,5 +4,10 @@ import lombok.Data;
 
 @Data
 public class RemoveBookModel {
-    String isbn, userId;
+        public RemoveBookResponseModel(String isbn, String userId) {
+            this.isbn = isbn;
+            this.userId = userId;
+        }
+        String isbn, userId;
+
 }

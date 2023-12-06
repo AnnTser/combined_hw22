@@ -1,4 +1,5 @@
 package api;
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import models.LoginModel;
 
@@ -8,6 +9,7 @@ import static specs.ReqRespSpec.responseSpec;
 
 
 public class Authorization {
+    @Step("Authorization")
     public Response getAuthResponse() {
         LoginModel userLogin = new LoginModel();
         userLogin.setUserName("testtestov31");
