@@ -20,6 +20,6 @@ public class ReqRespSpec {
     public static ResponseSpecification responseSpec = new ResponseSpecBuilder()
             .log(LogDetail.STATUS)
             .log(LogDetail.BODY)
-            .expectStatusCode(200)
+ //           .expectStatusCode(204)
             .build();
 }

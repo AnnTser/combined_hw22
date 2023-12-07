@@ -19,7 +19,7 @@ public class BookMoves {
         given(requestSpec)
                 .contentType(JSON)
                 .header("Authorization", "Bearer " + loginResponse.getToken())
-                .queryParam("UserId", loginResponse.getUserId())
+                .queryParam("UserID", loginResponse.getUserID())
                 .when()
                 .delete("/BookStore/v1/Books")
                 .then()

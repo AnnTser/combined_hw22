@@ -26,17 +26,17 @@ public class BookTests extends TestBase {
     @Test
     @WithLogin
     void addBookToProfileTest() {
-        step("Delete all books from profile", () -> {
-            bookMoves.deleteBooks(loginResponse);
-        });
+//        step("Delete all books from profile", () -> {
+//            bookMoves.deleteBooks(loginResponse);
+//        });
         step("Add book to profile", () -> {
             IsbnModel isbnModel = new IsbnModel("9781449325862");
-            List<IsbnModel> isbnList = new ArrayList<>();
-            isbnList.add(isbnModel);
+ //           List<IsbnModel> isbnList = new ArrayList<>();
+ //           isbnList.add(isbnModel);
 
             AddBookModel booksList = new AddBookModel();
-            booksList.setUserId(loginResponse.getUserId());
-            booksList.setIsbnCollection(isbnList);
+            booksList.setUserID(loginResponse.getUserID());
+ //           booksList.setCollectionOfIsbns(isbnList);
 
             bookMoves.addBook(loginResponse, booksList);
         });
@@ -52,24 +52,29 @@ public class BookTests extends TestBase {
     @Test
     @WithLogin
     void deleteBookFromProfileTest() {
-        step("Delete all books from profile", () -> {
-            bookMoves.deleteBooks(loginResponse);
-        });
+//        step("Delete all books from profile", () -> {
+//            bookMoves.deleteBooks(loginResponse);
+//        });
         step("Add book to profile", () -> {
-            List<IsbnModel> isbnList = new ArrayList<>();
+            IsbnModel  collectionOfIsbns [] = new IsbnModel[10];
             IsbnModel isbnModel = new IsbnModel("9781449325862");
-            isbnList.add(isbnModel);
+            collectionOfIsbns[0]=isbnModel;
 
             AddBookModel booksList = new AddBookModel();
-            booksList.setUserId(loginResponse.getUserId());
-            booksList.setIsbnCollection(isbnList);
+            booksList.setUserID(loginResponse.getUserID());
+            booksList.setCollectionOfIsbns(collectionOfIsbns);
 
             bookMoves.addBook(loginResponse, booksList);
         });
+
+
         step("Remove added book", () -> {
-            RemoveBookModel removeBookModel = new RemoveBookModel("9781449325862", "1bac20f1-55eb-4cdc-b546-957c96333466");
+            RemoveBookModel removeBookModel = new RemoveBookModel("9781449325862", "6b11b363-9eed-4a00-9469-51d95bed4ecf");
+                                                                                             //6b11b363-9eed-4a00-9469-51d95bed4ecf
             bookMoves.deleteBook(loginResponse, removeBookModel);
         });
+
+
         step("Check profile without book", () -> {
             open("/profile");
             profilePage.checkEmptyTable();

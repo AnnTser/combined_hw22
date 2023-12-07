@@ -1,19 +1,21 @@
 package api;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import models.LoginModel;
+import lombok.Data;
+import models.LoginRequestModel;
 
 import static io.restassured.RestAssured.given;
 import static specs.ReqRespSpec.requestSpec;
 import static specs.ReqRespSpec.responseSpec;
 
-
+@Data
 public class Authorization {
-    @Step("Authorization")
+  //  @Step("Authorization")
+
     public Response getAuthResponse() {
-        LoginModel userLogin = new LoginModel();
-        userLogin.setUserName("testtestov31");
-        userLogin.setPassword("Testtestov31_%");
+        LoginRequestModel userLogin = new LoginRequestModel ("testtestov31","Testtestov31_%");
+//        userLogin.setUserName("testtestov31");
+//        userLogin.setPassword("Testtestov31_%");
 
         return given(requestSpec)
                 .body(userLogin)
