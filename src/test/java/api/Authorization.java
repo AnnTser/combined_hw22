@@ -10,7 +10,7 @@ import static specs.ReqRespSpec.responseSpec;
 
 @Data
 public class Authorization {
-  //  @Step("Authorization")
+    @Step("Authorization")
 
     public Response getAuthResponse() {
         LoginRequestModel userLogin = new LoginRequestModel ("testtestov31","Testtestov31_%");
