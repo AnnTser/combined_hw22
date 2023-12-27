@@ -14,7 +14,7 @@ public class LoginTest  extends TestBase {
 
     @Test
     @WithLogin
-    @Tag("api")
+    @Tag("login")
     void loginTest() {
         step("Авторизация и проверка отображения имени", () -> {
             open("/profile");

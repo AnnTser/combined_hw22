@@ -22,7 +22,7 @@ import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
 
 @Owner("testtestov33")
-@Tag("delete")
+@Tag("deleteBook")
 public class BookTests extends TestBase {
     AuthorizationApi authorizationApi = new AuthorizationApi();
     BooksApi booksApi = new BooksApi();

@@ -39,3 +39,13 @@ tasks.withType(Test) {
         }
     }
 }
+task login_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("login")
+    }
+}
+task delete_test(type: Test) {
+    useJUnitPlatform {
+        includeTags("deleteBook")
+    }
+}
