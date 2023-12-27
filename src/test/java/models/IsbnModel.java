@@ -10,6 +10,5 @@ public class IsbnModel {
     public IsbnModel(String isbn) {
         this.isbn = isbn;
     }
-    @JsonProperty
     String isbn;
 }

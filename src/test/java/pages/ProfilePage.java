@@ -4,29 +4,27 @@ import com.codeborne.selenide.SelenideElement;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
 
 public class ProfilePage {
     SelenideElement
-            userNameValue = $("#userName-value"),
-            emptyTable = $x("//*[contains(text(),'No rows found')]"),
-            gitPocketBook = $("[id='see-book-Git Pocket Guide']");
+            noDataTableText =$x("//*[contains(text(),'No rows found')]"),
+            gitPocketBook = $("[id='see-book-Git Pocket Guide']"),
+            userNameValue = $("#userName-value");
 
-
-    public ProfilePage checkEmptyTable() {
-        emptyTable.shouldBe(visible);
+    public ProfilePage verifyNoDataTableText(){
+       // open("/profile");
+        noDataTableText.shouldBe(visible);
         return this;
     }
 
-    public ProfilePage checkGitPocketBook() {
+    public ProfilePage verifyGitPocketBook() {
         gitPocketBook.shouldBe(visible);
         return this;
     }
 
-    public ProfilePage checkUserNameValue(String text) {
+    public ProfilePage verifyUserNameValue(String text) {
         userNameValue.shouldHave(text(text));
         return this;
-
     }
 }

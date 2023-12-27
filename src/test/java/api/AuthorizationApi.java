@@ -1,32 +1,27 @@
 package api;
-import io.qameta.allure.Step;
-import io.restassured.response.Response;
-import lombok.Data;
+
 import models.LoginRequestModel;
+import models.LoginResponseModel;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.http.ContentType.JSON;
 import static specs.ReqRespSpec.requestSpec;
 import static specs.ReqRespSpec.responseSpec;
 
-@Data
-public class Authorization {
-  //  @Step("Authorization")
-
-    public Response getAuthResponse() {
-        LoginRequestModel userLogin = new LoginRequestModel ("testtestov31","Testtestov31_%");
-//        userLogin.setUserName("testtestov31");
-//        userLogin.setPassword("Testtestov31_%");
-
+public class AuthorizationApi {
+    public LoginResponseModel login(LoginRequestModel loginRequestModel){
         return given(requestSpec)
-                .body(userLogin)
+                .body(loginRequestModel)
+                .contentType(JSON)
                 .when()
                 .post("/Account/v1/Login")
                 .then()
                 .spec(responseSpec)
                 .statusCode(200)
-                .extract().response();
+                .extract().as(LoginResponseModel.class);
     }
 }
+
 
 
 

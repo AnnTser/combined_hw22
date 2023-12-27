@@ -1,83 +1,81 @@
 package tests;
 
-import api.BookMoves;
+import api.AuthorizationApi;
+import api.BooksApi;
 import helpers.WithLogin;
 import io.qameta.allure.Owner;
-import models.AddBookModel;
+import models.AddBooksListRequestModel;
+import models.DeleteBookResponseModel;
 import models.IsbnModel;
 import models.LoginResponseModel;
-import models.RemoveBookModel;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.ProfilePage;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static io.qameta.allure.Allure.step;
 
-@Owner("testtestov31")
+@Owner("testtestov33")
 @Tag("delete")
 public class BookTests extends TestBase {
-    //   Authorization authorization = new Authorization();
-    BookMoves bookMoves = new BookMoves();
-    LoginResponseModel loginResponse = new LoginResponseModel();
+    AuthorizationApi authorizationApi = new AuthorizationApi();
+    BooksApi booksApi = new BooksApi();
+    LoginResponseModel loginResponse = authorizationApi.login(loginRequestModel);
     ProfilePage profilePage = new ProfilePage();
 
     @Test
     @WithLogin
     void addBookToProfileTest() {
-//        step("Delete all books from profile", () -> {
-//            bookMoves.deleteBooks(loginResponse);
-//        });
-        step("Add book to profile", () -> {
+        step("Удаление всех книг в коллекции", () -> {
+            booksApi.deleteAllBooks(loginResponse);
+        });
+        step("Добавление книги в каталог", () -> {
             IsbnModel isbnModel = new IsbnModel("9781449325862");
- //           List<IsbnModel> isbnList = new ArrayList<>();
- //           isbnList.add(isbnModel);
+            List<IsbnModel> isbnList = new ArrayList<>();
+            isbnList.add(isbnModel);
 
-            AddBookModel booksList = new AddBookModel();
-            booksList.setUserID(loginResponse.getUserID());
- //           booksList.setCollectionOfIsbns(isbnList);
+            AddBooksListRequestModel booksList = new AddBooksListRequestModel();
+            booksList.setUserId(loginResponse.getUserId());
+            booksList.setCollectionOfIsbns(isbnList);
 
-            bookMoves.addBook(loginResponse, booksList);
+            booksApi.addBook(loginResponse, booksList);
         });
-
-
-        step("Check profile with book", () -> {
+        step("Открытие страницы через UI и проверка наличия книги", () -> {
             open("/profile");
-            profilePage.checkGitPocketBook();
+            profilePage.verifyGitPocketBook();
         });
-    }
 
+    }
 
     @Test
     @WithLogin
     void deleteBookFromProfileTest() {
-//        step("Delete all books from profile", () -> {
-//            bookMoves.deleteBooks(loginResponse);
-//        });
-        step("Add book to profile", () -> {
-            IsbnModel  collectionOfIsbns [] = new IsbnModel[10];
+        step("Удаление всех книг в коллекции", () -> {
+            booksApi.deleteAllBooks(loginResponse);
+        });
+        step("Добавление в коллекцию книги", () -> {
+            List<IsbnModel> isbnList = new ArrayList<>();
             IsbnModel isbnModel = new IsbnModel("9781449325862");
-            collectionOfIsbns[0]=isbnModel;
+            isbnList.add(isbnModel);
 
-            AddBookModel booksList = new AddBookModel();
-            booksList.setUserID(loginResponse.getUserID());
-            booksList.setCollectionOfIsbns(collectionOfIsbns);
-
-            bookMoves.addBook(loginResponse, booksList);
+            AddBooksListRequestModel booksList = new AddBooksListRequestModel();
+            booksList.setUserId(loginResponse.getUserId());
+            booksList.setCollectionOfIsbns(isbnList);
+            booksApi.addBook(loginResponse, booksList);
         });
-
-
-        step("Remove added book", () -> {
-            RemoveBookModel removeBookModel = new RemoveBookModel("9781449325862", "6b11b363-9eed-4a00-9469-51d95bed4ecf");
-                                                                                             //6b11b363-9eed-4a00-9469-51d95bed4ecf
-            bookMoves.deleteBook(loginResponse, removeBookModel);
+        step("Удаление книги", () -> {
+            DeleteBookResponseModel deleteBookModel = new DeleteBookResponseModel("9781449325862", "7eb43170-dfa0-4af8-bc69-f947bad76f02");
+            booksApi.deleteBook(loginResponse, deleteBookModel);
         });
-
-
-        step("Check profile without book", () -> {
+        step("Открытие страницы через UI и проверка отсутствия книги", () -> {
             open("/profile");
-            profilePage.checkEmptyTable();
+            profilePage.verifyNoDataTableText();
         });
     }
 }
