@@ -7,19 +7,18 @@ import io.restassured.specification.ResponseSpecification;
 
 import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.restassured.RestAssured.with;
-import static io.restassured.http.ContentType.JSON;
+
 
 public class ReqRespSpec {
     public static RequestSpecification requestSpec = with()
             .filter(withCustomTemplates())
             .log().uri()
             .log().method()
-            .log().body()
-            .contentType(JSON);
+            .log().body();
+
 
     public static ResponseSpecification responseSpec = new ResponseSpecBuilder()
             .log(LogDetail.STATUS)
             .log(LogDetail.BODY)
- //           .expectStatusCode(204)
             .build();
 }
